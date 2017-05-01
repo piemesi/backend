@@ -1,0 +1,41 @@
+  nginx_tools:
+    image:  malgrat/nginx_base:tutumubuntu_phalcon  
+    container_name: nginx_tools
+    ports:
+     - "8888:80"
+    links:
+     - phpfpm
+     - mysql:mysql
+    volumes:
+     - ./nginx_tools/default:/etc/nginx/sites-available/default
+     - ./nginx_tools/default:/etc/nginx/sites-enabled/default
+     - ./:/var/www/backend
+     - ./logs/nginx-error.log:/var/log/nginx/error.log
+     - ./logs/nginx-access.log:/var/log/nginx/access.log
+  phpfpm:
+    image: malgrat/phpfpm:rdkafka_composer_pinba_pdo
+    container_name: phpfpm
+    extra_hosts:
+     - "localhost:172.17.0.1"
+    ports:
+        - "9000:9000"
+    volumes:
+        - ./:/var/www/backend
+    working_dir: /var/www/backend
+  mysql:
+   image: malgrat/mysql_percona:task
+   container_name: mysql
+   environment:
+     MYSQL_ROOT_PASSWORD: 123456
+     MYSQL_USER: writer
+     MYSQL_PASSWORD: 123456
+     MYSQL_DATABASE: Task
+   extra_hosts:
+     - "dbhost:172.17.0.5"
+   ports:
+    - "3307:3306"
+   volumes:
+    - /var/lib/mysql
+    - ./mysql/my.cnf:/etc/mysql/my.cnf
+   command:
+    - '--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci'

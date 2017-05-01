@@ -33,7 +33,7 @@ final class Init
     private function create()
     {
 
-        $mysqli = new \mysqli("localhost", "writer", "123456", "Processing_test"); //, "port"
+        $mysqli = new \mysqli("172.17.0.1", "writer", "123456", "Task", "3307");
 
         /* проверка соединения */
         if ($mysqli->connect_errno) {
@@ -110,9 +110,9 @@ final class Init
         $query = /** @lang sql */
             "SELECT * FROM test WHERE result IN ('normal','success')";
 
-        $data = [];        /* Извлекае необходимые данные */
-        if ($result = $this->connect->query($query)) {
-            $data = $result->fetch_array();
+        $data = 'No relevant rows founded';        /* Извлекае необходимые данные */
+        if ($result = $this->connect->query($query)->fetch_all(MYSQLI_ASSOC)) {
+            $data = $result;
         }
 
         $this->connect->close();
@@ -126,5 +126,5 @@ $i = new Init();
 
 $data = $i->get();
 
-var_dump($data);
+print_r($data);
 
