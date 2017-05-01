@@ -33,6 +33,7 @@ final class Init
     private function create()
     {
 
+        // @toDo - в идеале вынести в отдельный файл настроек и получать из docker-compose
         $mysqli = new \mysqli("172.17.0.1", "writer", "123456", "Task", "3307");
 
         /* проверка соединения */
