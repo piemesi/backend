@@ -4,7 +4,7 @@
 ### Запуск проекта c помощью Docker-compose
 
 1. Необходимо установить docker (engine - ver. >16.0). Позволить запускать docker без `sudo`
-2. Установить docker-compose (ver. ^1.11.)
+2. Установить docker-compose (ver. >1.11.)
 3. Clone this repo и зайти в **root dir проекта**.
 4. Выполнить в консоли: `docker-compose up -d`
 5. Выполнить `docker ps`. Должны быть запущены сервис-контейнеры **nginx_tools**, **phpfpm**, **mysql**
